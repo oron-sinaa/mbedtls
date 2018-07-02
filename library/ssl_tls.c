@@ -6436,7 +6436,6 @@ mbedtls_ssl_srtp_profile mbedtls_ssl_get_dtls_srtp_protection_profile( const mbe
 }
 
 int mbedtls_ssl_get_dtls_srtp_key_material( const mbedtls_ssl_context *ssl, unsigned char *key, size_t *key_len ) {
-    *key_len = 0;
 
     /* check output buffer size */
     if ( *key_len < ssl->dtls_srtp_info.dtls_srtp_keys_len) {
@@ -7706,8 +7705,7 @@ void mbedtls_ssl_free( mbedtls_ssl_context *ssl )
 #endif
 
 #if defined (MBEDTLS_SSL_DTLS_SRTP)
-    mbedtls_zeroize( ssl->dtls_srtp_info.dtls_srtp_keys, ssl->dtls_srtp_info.dtls_srtp_keys_len );
- //   mbedtls_free( ssl->dtls_srtp_keys );
+    mbedtls_platform_zeroize( ssl->dtls_srtp_info.dtls_srtp_keys, ssl->dtls_srtp_info.dtls_srtp_keys_len );
 #endif /* MBEDTLS_SSL_DTLS_SRTP */
 
     MBEDTLS_SSL_DEBUG_MSG( 2, ( "<= free" ) );
